@@ -62,7 +62,17 @@ public class Boat {
         return owners;
     }
 
+    public int getYear() {
+        return year;
+    }
 
+    public String getImage() {
+        return image;
+    }
+
+    public Auction getAuction() {
+        return auction;
+    }
 
     public void setBrand(String brand) {
         this.brand = brand;

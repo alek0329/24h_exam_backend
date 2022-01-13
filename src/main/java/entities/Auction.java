@@ -26,7 +26,7 @@ public class Auction {
     private String location;
 
     @OneToMany (mappedBy="auction", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Boat> boats = new ArrayList<>();
+    private List<Boat> boats = new ArrayList<Boat>();
 
     public Auction(String name, String date, String time, String location) {
         this.auctionId = auctionId;
@@ -38,6 +38,13 @@ public class Auction {
     }
 
     public Auction() {
+    }
+
+    public void addBoat (Boat boat) {
+        this.boats.add(boat);
+        if (boat != null) {
+            boat.setAuction(this);
+        }
     }
 
     public void boatRemover (Boat boat) {boats.remove(boat);}

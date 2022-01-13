@@ -1,5 +1,6 @@
 package rest;
 
+import DTO.AuctionDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.User;
@@ -10,6 +11,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -18,6 +20,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
+import facades.AuctionFacade;
 import utils.EMF_Creator;
 
 /**
@@ -27,6 +30,7 @@ import utils.EMF_Creator;
 public class DemoResource {
     
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
+    private static final AuctionFacade AUCTION_FACADE = AuctionFacade.getAuctionFacade(EMF);
     @Context
     private UriInfo context;
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();

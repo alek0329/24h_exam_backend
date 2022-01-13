@@ -28,6 +28,8 @@ public class SetupTestUsers {
     User admin = new User("admin", "kode123");
     User both = new User("user_admin", "kode123");
 
+    Owner bo  = new Owner ("Bo Bådløs", "ingen Båd gade 4","23487500");
+    Owner jens = new Owner ("Jens Peter","Lars Allan Vej 24","96374231");
     Owner hans = new Owner("Hans Hansen","Hansensgade 12","25528524");
     Owner ditlev = new Owner("Ditlev Hansen","Hansensgade 12","27398400");
     Owner mario = new Owner("Mario Luigi","Læssøesgade 12","26397400");
@@ -37,6 +39,7 @@ public class SetupTestUsers {
     Boat jollen = new Boat("Henriette","Suzuki",1980,"www.pictureofboat.com");
     Boat yachten = new Boat("Line","Yacht",2010,"www.pictureofboat.com");
     Boat fiskeBåd = new Boat("Tunklatten", "Fiat", 2017,"www.pictureofboat.com");
+    Boat yacht1= new Boat("Niels Peter", "Yacht", 2020,"www.pictureofboat.com");
 
     if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||both.getUserPass().equals("test"))
       throw new UnsupportedOperationException("You have not changed the passwords");
@@ -49,6 +52,7 @@ public class SetupTestUsers {
     both.addRole(userRole);
     both.addRole(adminRole);
 
+    jens.addBoat(yacht1);
     ditlev.addBoat(jollen);
     mario.addBoat(yachten);
     hans.addBoat(fiskeBåd);
@@ -58,12 +62,15 @@ public class SetupTestUsers {
     fiskeBåd.setAuction(cph);
     yachten.setAuction(cph);
     em.persist(ditlev);
+    em.persist(jens);
+    em.persist(bo);
     em.persist(hans);
     em.persist(mario);
     em.persist(lisbeth);
     em.persist(cph);
     em.persist(virum);
     em.persist(jollen);
+    em.persist(yacht1);
     em.persist(fiskeBåd);
     em.persist(yachten);
 
