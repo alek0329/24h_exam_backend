@@ -29,7 +29,7 @@ public class Role implements Serializable {
     private String roleName;
     
     @ManyToMany(mappedBy = "roleList")
-    private List<User> userList;
+    private List<Owner> ownerList;
 
     public Role() {
     }
@@ -46,11 +46,11 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public List<Owner> getUserList() {
+        return ownerList;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUserList(List<Owner> userList) {
+        this.ownerList = userList;
     }   
 }

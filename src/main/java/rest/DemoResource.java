@@ -1,17 +1,13 @@
 package rest;
 
-import DTO.AuctionDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import entities.User;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -20,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
+import entities.Owner;
 import facades.AuctionFacade;
 import utils.EMF_Creator;
 
@@ -53,8 +50,8 @@ public class DemoResource {
 
         EntityManager em = EMF.createEntityManager();
         try {
-            TypedQuery<User> query = em.createQuery ("select u from User u",entities.User.class);
-            List<User> users = query.getResultList();
+            TypedQuery<Owner> query = em.createQuery ("select o from Owner o",entities.Owner.class);
+            List<Owner> users = query.getResultList();
             return "[" + users.size() + "]";
         } finally {
             em.close();

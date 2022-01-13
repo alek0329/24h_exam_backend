@@ -3,12 +3,11 @@ package facades;
 import DTO.UserDTOS.CreateUserDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entities.Owner;
 import entities.Role;
-import entities.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
 
 import security.errorhandling.AuthenticationException;
 
@@ -36,40 +35,40 @@ public class UserFacade {
         return instance;
     }
 
-    public User getVerifiedUser(String username, String password) throws AuthenticationException {
+    public Owner getVerifiedUser(String userName, String password) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
-        User user;
+        Owner owner;
         try {
-            user = em.find(User.class, username);
-            if (user == null || !user.verifyPassword(password, user.getUserPass())) {
+            owner = em.find(Owner.class, userName);
+            if (owner == null || !owner.verifyPassword(password, owner.getUserPass())) {
                 throw new AuthenticationException("Invalid user name or password");
             }
         } finally {
             em.close();
         }
-        return user;
+        return owner;
     }
 
     public String createUser(String username, String password) {
         CreateUserDTO createUserDTO = new CreateUserDTO();
         EntityManager em = emf.createEntityManager();
 
-        User user = new User(username, password);
+        Owner owner = new Owner("username", "password","name","address","phone");
         Role userRole;
         try {
             if (em.find(Role.class, "user") != null) {
                 em.getTransaction().begin();
                 userRole = em.find(Role.class, "user");
-                user.addRole(userRole);
-                em.persist(user);
+                owner.addRole(userRole);
+                em.persist(owner);
                 em.getTransaction().commit();
             }
             else {
                 Role newUserRole = new Role("user");
                 em.getTransaction().begin();
                 em.persist(newUserRole);
-                user.addRole(newUserRole);
-                em.persist(user);
+                owner.addRole(newUserRole);
+                em.persist(owner);
                 em.getTransaction().commit();
             }
 

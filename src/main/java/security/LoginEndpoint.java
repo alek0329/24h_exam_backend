@@ -10,12 +10,13 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import entities.Owner;
 import facades.UserFacade;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import entities.User;
+
 import errorhandling.API_Exception;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -27,7 +28,6 @@ import security.errorhandling.AuthenticationException;
 import errorhandling.GenericExceptionMapper;
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
-import utils.SetupTestUsers;
 
 @Path("login")
 public class LoginEndpoint {
@@ -40,21 +40,22 @@ public class LoginEndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(String jsonString) throws AuthenticationException, API_Exception {
-        String username;
+        String userName;
+        int ownerId = 0;
         String password;
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-            username = json.get("username").getAsString();
+            userName = json.get("username").getAsString();
             password = json.get("password").getAsString();
         } catch (Exception e) {
             throw new API_Exception("Malformed JSON Suplied", 400, e);
         }
 
         try {
-            User user = USER_FACADE.getVerifiedUser(username, password);
-            String token = createToken(username, user.getRolesAsStrings());
+            Owner owner = USER_FACADE.getVerifiedUser(userName, password);
+            String token = createToken(userName, owner.getRolesAsStrings());
             JsonObject responseJson = new JsonObject();
-            responseJson.addProperty("username", username);
+            responseJson.addProperty("username", userName);
             responseJson.addProperty("token", token);
             return Response.ok(new Gson().toJson(responseJson)).build();
 
@@ -101,12 +102,12 @@ public class LoginEndpoint {
 
         // SetupTestUsers.setupTestUsers();
 
-        String username;
+        String userName;
         String password;
 
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-            username = json.get("username").getAsString();
+            userName = json.get("username").getAsString();
             password = json.get("password").getAsString();
 
         } catch (Exception e) {
@@ -114,7 +115,7 @@ public class LoginEndpoint {
         }
 
         try {
-            return USER_FACADE.createUser(username, password);
+            return USER_FACADE.createUser(userName, password);
         } catch (Exception e) {
             throw new API_Exception("Malformed Json Suplied 2", 400, e);
         }

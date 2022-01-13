@@ -1,6 +1,6 @@
 package rest;
 
-import entities.User;
+import entities.Owner;
 import entities.Role;
 
 import io.restassured.RestAssured;
@@ -18,7 +18,6 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
@@ -66,16 +65,16 @@ public class LoginEndpointTest {
         try {
             em.getTransaction().begin();
             //Delete existing users and roles to get a "fresh" database
-            em.createQuery("delete from User").executeUpdate();
+            em.createQuery("delete from Owner").executeUpdate();
             em.createQuery("delete from Role").executeUpdate();
 
             Role userRole = new Role("user");
             Role adminRole = new Role("admin");
-            User user = new User("user", "test");
+            Owner user = new Owner("user", "test","test","test","test");
             user.addRole(userRole);
-            User admin = new User("admin", "test");
+            Owner admin = new Owner("admin", "test","test","test","test");
             admin.addRole(adminRole);
-            User both = new User("user_admin", "test");
+            Owner both = new Owner("user_admin", "test","test","test","test");
             both.addRole(userRole);
             both.addRole(adminRole);
             em.persist(userRole);
