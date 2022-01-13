@@ -10,6 +10,7 @@ import facades.AuctionFacade;
 import facades.BoatFacade;
 import utils.EMF_Creator;
 
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -66,4 +67,26 @@ public class ExamResource {
         }
     }
 
+    @DELETE
+    @Path("removefromauction/{auctionId}/{boatId}")
+    @RolesAllowed("admin")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String removeBoatFromAuction(@PathParam("auctionId")int auctionId, @PathParam("boatId")int boatId) {
+        AuctionDTO auctionDTO = null;
+        if (boatId != 0 && auctionId != 0) {
+            try {
+                auctionDTO = AUCTION_FACADE.removeBoat(boatId, auctionId);
+            } catch (Exception e) {
+                throw new NotFoundException("Boat could not be removed");
+            }
+            } else{
+                throw new NotFoundException("Missing ID");
+            }
+            if (auctionDTO != null) {
+                return GSON.toJson(auctionDTO);
+            } else {
+                throw new NotFoundException("Boat could not be removed");
+            }
+        }
 }

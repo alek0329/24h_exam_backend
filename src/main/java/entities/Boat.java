@@ -44,6 +44,9 @@ public class Boat {
         this.auction = auction;
     }
 
+    public void removeFromAuction(Boat boat){
+        boat.setAuction(null);
+    }
 
     public int getBoatId() {
         return boatId;
