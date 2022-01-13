@@ -13,7 +13,7 @@ public class AuctionDTO {
     private String date;
     private String time;
     private String location;
-    private List<Boat> boats;
+    private List<BoatDTO> boats;
 
     public AuctionDTO() {
     }
@@ -24,7 +24,7 @@ public class AuctionDTO {
         this.date = auction.getDate();
         this.time = auction.getTime();
         this.location = auction.getLocation();
-
+      
 
     }
 

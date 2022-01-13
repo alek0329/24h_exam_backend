@@ -32,6 +32,7 @@ public class OwnerDTO {
         }
     }
 
+
     public int getOwnerId() {
         return ownerId;
     }

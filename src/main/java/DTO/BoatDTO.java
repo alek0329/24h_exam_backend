@@ -2,7 +2,6 @@ package DTO;
 
 import entities.Auction;
 import entities.Boat;
-import entities.Owner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +13,8 @@ public class BoatDTO {
     private String name;
     private String image;
     private int year;
-    private List <Owner> owners;
-    private Auction auction;
+    private List <OwnerDTO> owners;
+    private AuctionDTO auction;
 
 
     public BoatDTO() {
@@ -26,12 +25,12 @@ public class BoatDTO {
         this.name = boat.getName();
         this.year = boat.getYear();
         this.brand = boat.getBrand();
-        this.owners = boat.getOwners();
+        this.owners = OwnerDTO.getDTO(boat.getOwners());
         this.image = boat.getImage();
-        this.auction = boat.getAuction();
+        this.auction = new AuctionDTO(boat.getAuction());
     }
 
-    public static List<BoatDTO> getDTO(List<Boat>boats){
+    public static List<BoatDTO> getDTO(List<Boat> boats){
         if (boats != null) {
             List <BoatDTO> boatsDTO = new ArrayList<>();
             boats.forEach(b -> boatsDTO.add(new BoatDTO(b)));
@@ -82,19 +81,19 @@ public class BoatDTO {
         this.year = year;
     }
 
-    public List<Owner> getOwners() {
+    public List<OwnerDTO> getOwners() {
         return owners;
     }
 
-    public void setOwners(List<Owner> owners) {
+    public void setOwners(List<OwnerDTO> owners) {
         this.owners = owners;
     }
 
-    public Auction getAuction() {
+    public AuctionDTO getAuction() {
         return auction;
     }
 
-    public void setAuction(Auction auction) {
+    public void setAuction(AuctionDTO auction) {
         this.auction = auction;
     }
 }
