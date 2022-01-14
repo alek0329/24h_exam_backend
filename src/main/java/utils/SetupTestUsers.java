@@ -23,6 +23,8 @@ public class SetupTestUsers {
     // CHANGE the three passwords below, before you uncomment and execute the code below
     // Also, either delete this file, when users are created or rename and add to .gitignore
     // Whatever you do DO NOT COMMIT and PUSH with the real passwords
+    Owner testAdmin = new Owner("testAdmin","123", "TestAdmin","test","12345678");
+    Owner testUser = new Owner("testUser","123", "TestUser","test","12345678");
 
     Owner user = new Owner("user", "kode123", "user","N/A","12345678");
     Owner admin = new Owner("admin", "kode123","user","N/A","12345678");
@@ -51,7 +53,8 @@ public class SetupTestUsers {
     admin.addRole(adminRole);
     both.addRole(userRole);
     both.addRole(adminRole);
-
+    testAdmin.addRole(adminRole);
+    testUser.addRole(userRole);
     bo.addRole(userRole);
     lisbeth.addRole(userRole);
     mario.addRole(userRole);
@@ -74,6 +77,8 @@ public class SetupTestUsers {
     fiskeBåd.setAuction(cph);
     yachten.setAuction(cph);
     minYacht.setAuction(cph);
+    em.persist(testUser);
+    em.persist(testAdmin);
     em.persist(alek);
     em.persist(minYacht);
     em.persist(ditlev);
