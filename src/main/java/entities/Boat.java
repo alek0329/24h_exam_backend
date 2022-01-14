@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,16 @@ public class Boat {
     @NotNull
     @Column (name ="boatID")
     private int boatId;
+    @NotBlank
     @Column (name ="brand")
     private String brand;
+    @NotBlank
     @Column (name ="name")
     private String name;
+    @NotBlank
     @Column (name="Year")
     private int year;
+    @NotBlank
     @Column (name="ImageUrl")
     private String image;
 

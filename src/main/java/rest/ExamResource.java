@@ -138,6 +138,28 @@ public class ExamResource {
             throw new NotFoundException("auction could not be inserted");
 
         }
+    }
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("createboat")
+    public String boatCreator(BoatDTO boatDTO) {
+        BoatDTO boatResponseDTO = null;
+        if (boatDTO != null) {
+            try {
+                System.out.println(boatDTO.toString());
+                boatResponseDTO = BOAT_FACADE.createNewBoat(boatDTO);
+            } catch (Exception e) {
+                throw new NotFoundException("Boat could not be created");
+            }
+        } else {
+            throw new NotFoundException("Missing boat");
+        }
+        if (boatResponseDTO != null) {
+            return GSON.toJson(boatResponseDTO);
+        } else {
+            throw new NotFoundException("Boat could not be inserted");
+        }
 
     }
 }

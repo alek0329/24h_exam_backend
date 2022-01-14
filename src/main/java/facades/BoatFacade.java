@@ -51,5 +51,21 @@ public class BoatFacade {
         }
         return BoatDTO.getDTO(ownersBoats);
     }
+    public BoatDTO createNewBoat(BoatDTO boatDTO){
+        EntityManager em = emf.createEntityManager();
+        Boat boat = null;
+
+        try {
+            em.getTransaction().begin();
+            boat = new Boat(boatDTO.getName(),boatDTO.getBrand(), boatDTO.getYear(), boatDTO.getImage());
+            em.persist(boat);
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
+        return new BoatDTO(boat);
+
+    }
+
 }
 
