@@ -11,6 +11,7 @@ public class OwnerDTO {
     private String name;
     private String address;
     private String phone;
+    private List<BoatDTO> boats;
 
     public OwnerDTO() {
     }
@@ -20,6 +21,7 @@ public class OwnerDTO {
         this.name = owner.getName();
         this.address = owner.getAddress();
         this.phone = owner.getPhone();
+
     }
 
     public static List<OwnerDTO> getDTO(List<Owner> owners) {

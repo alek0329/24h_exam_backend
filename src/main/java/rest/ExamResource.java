@@ -34,35 +34,60 @@ public class ExamResource {
     @Path("auctions")
     public String allAuctions() {
         List<AuctionDTO> auctionDTO = null;
-        try{
+        try {
             auctionDTO = AUCTION_FACADE.getAllAuctions();
             System.out.println(auctionDTO.size());
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new NotFoundException("Error getting all auctions");
         }
         if (auctionDTO != null && !auctionDTO.isEmpty()) {
             return GSON.toJson(auctionDTO);
-        }else {
+        } else {
             throw new NotFoundException("Error getting all auctions");
         }
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("myboats")
+    public String getOwnerBoats(String userName) {
+        List<BoatDTO> allMyBoats = null;
+        userName = "alek";
+        if (userName != null) {
+            try {
+                allMyBoats = BOAT_FACADE.getAllOwnerBoats(userName);
+            } catch (Exception e) {
+                throw new NotFoundException("Boats not found");
+            }
+        } else {
+            throw new NotFoundException("missing Username");
+        }
+        if (allMyBoats != null && !allMyBoats.isEmpty()) {
+            return GSON.toJson(allMyBoats);
+        } else {
+            throw new NotFoundException("Boats not found");
+        }
+    }
+
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("auction/{auctionId}")
-        public String getAuctionBoats (@PathParam("auctionId") int auctionId) throws NotFoundException {
-        List <BoatDTO> allBoatsInAuction = null;
-        if (auctionId != 0){
+    public String getAuctionBoats(@PathParam("auctionId") int auctionId) throws NotFoundException {
+        List<BoatDTO> allBoatsInAuction = null;
+        if (auctionId != 0) {
             try {
                 allBoatsInAuction = BOAT_FACADE.getAllBoatsInAuction(auctionId);
-            } catch (Exception e){
+            } catch (Exception e) {
                 throw new NotFoundException("No boats were found");
             }
-        }else {
+        } else {
             throw new NotFoundException("Missing Auction ID");
-        }if (allBoatsInAuction != null) {
+        }
+        if (allBoatsInAuction != null) {
             System.out.println(allBoatsInAuction.size());
             return GSON.toJson(allBoatsInAuction);
-        } else{
+        } else {
             throw new NotFoundException("no Boats in this Auction");
         }
     }
@@ -72,7 +97,7 @@ public class ExamResource {
     @RolesAllowed("admin")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String removeBoatFromAuction(@PathParam("auctionId")int auctionId, @PathParam("boatId")int boatId) {
+    public String removeBoatFromAuction(@PathParam("auctionId") int auctionId, @PathParam("boatId") int boatId) {
         AuctionDTO auctionDTO = null;
         if (boatId != 0 && auctionId != 0) {
             try {
@@ -80,13 +105,40 @@ public class ExamResource {
             } catch (Exception e) {
                 throw new NotFoundException("Boat could not be removed");
             }
-            } else{
-                throw new NotFoundException("Missing ID");
-            }
-            if (auctionDTO != null) {
-                return GSON.toJson(auctionDTO);
-            } else {
-                throw new NotFoundException("Boat could not be removed");
-            }
+        } else {
+            throw new NotFoundException("Missing ID");
         }
+        if (auctionDTO != null) {
+            return GSON.toJson(auctionDTO);
+        } else {
+            throw new NotFoundException("Boat could not be removed");
+        }
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed("admin")
+    @Path("createauction")
+    public String auctionCreator(AuctionDTO auctionDTO) {
+        AuctionDTO auctionResponseDTO = null;
+        if (auctionDTO != null) {
+            try {
+                System.out.println(auctionDTO.toString());
+                auctionResponseDTO = AUCTION_FACADE.createAuction(auctionDTO);
+            } catch (Exception e) {
+                throw new NotFoundException("Auction could not be created");
+            }
+        } else {
+            throw new NotFoundException("Missing auction");
+        }
+        if (auctionResponseDTO != null) {
+            return GSON.toJson(auctionResponseDTO);
+        } else {
+            throw new NotFoundException("auction could not be inserted");
+
+        }
+
+    }
 }
+

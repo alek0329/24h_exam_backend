@@ -27,7 +27,7 @@ public class Boat {
     }
 
     @ManyToMany
-    @JoinColumn(name="OwnerID")
+    @JoinColumn(name="user_name")
     private List <Owner> owners;
 
     @ManyToOne

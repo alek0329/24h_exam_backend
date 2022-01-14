@@ -61,6 +61,10 @@ public class SetupTestUsers {
     alek.addRole(adminRole);
     jens.addBoat(yacht1);
     alek.addBoat(minYacht);
+    alek.addBoat(yacht1);
+    alek.addBoat(yachten);
+    alek.addBoat(fiskeBåd);
+    alek.addBoat(jollen);
     ditlev.addBoat(jollen);
     mario.addBoat(yachten);
     hans.addBoat(fiskeBåd);

@@ -102,12 +102,12 @@ public class LoginEndpoint {
 
         // SetupTestUsers.setupTestUsers();
 
-        String userName;
+        String username;
         String password;
 
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-            userName = json.get("username").getAsString();
+            username = json.get("username").getAsString();
             password = json.get("password").getAsString();
 
         } catch (Exception e) {
@@ -115,7 +115,7 @@ public class LoginEndpoint {
         }
 
         try {
-            return USER_FACADE.createUser(userName, password);
+            return USER_FACADE.createUser(username, password);
         } catch (Exception e) {
             throw new API_Exception("Malformed Json Suplied 2", 400, e);
         }

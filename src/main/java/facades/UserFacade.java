@@ -53,7 +53,7 @@ public class UserFacade {
         CreateUserDTO createUserDTO = new CreateUserDTO();
         EntityManager em = emf.createEntityManager();
 
-        Owner owner = new Owner("username", "password","name","address","phone");
+        Owner owner = new Owner(username,password);
         Role userRole;
         try {
             if (em.find(Role.class, "user") != null) {

@@ -39,5 +39,17 @@ public class BoatFacade {
         }
         return BoatDTO.getDTO(boatsInAuction);
     }
+
+    public List <BoatDTO> getAllOwnerBoats(String userName) {
+        EntityManager em = emf.createEntityManager();
+        List<Boat> ownersBoats;
+        try{
+            TypedQuery<Boat> tq = em.createQuery("SELECT b from Owner o JOIN o.boats b", Boat.class);
+            ownersBoats = tq.getResultList();
+        }finally{
+            em.close();
+        }
+        return BoatDTO.getDTO(ownersBoats);
+    }
 }
 

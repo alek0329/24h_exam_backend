@@ -43,6 +43,24 @@ public class AuctionFacade {
         return AuctionDTO.getDTO(allAuctions);
     }
 
+    public AuctionDTO createAuction (AuctionDTO auctionDTO){
+        EntityManager em = emf.createEntityManager();
+        Auction auction = null;
+        try {
+            em.getTransaction().begin();
+            if (auctionDTO.getName().isEmpty()){
+                System.out.println("error");
+                em.close();
+            }
+            auction = new Auction(auctionDTO.getName(),auctionDTO.getDate(),auctionDTO.getTime(),auctionDTO.getLocation());
+            em.persist(auction);
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
+        return new AuctionDTO(auction);
+    }
+
     public AuctionDTO removeBoat (int boatId,int auctionId) {
         EntityManager em = emf.createEntityManager();
         Boat boatToRemove;

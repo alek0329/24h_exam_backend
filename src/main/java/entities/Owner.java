@@ -17,7 +17,7 @@ public class Owner implements Serializable {
 
     @Column(name = "ownerID")
     @NotNull
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     private int ownerId;
 
@@ -60,6 +60,11 @@ public class Owner implements Serializable {
         this.boats = new ArrayList<>();
     }
 
+    public Owner (String userName, String userPass){
+        this.userName = userName;
+        String salt =BCrypt.gensalt();
+        this.userPass = BCrypt.hashpw(userPass, salt);
+    }
     public List<String> getRolesAsStrings() {
         if (roleList.isEmpty()) {
             return null;

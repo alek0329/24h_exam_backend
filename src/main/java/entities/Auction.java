@@ -3,6 +3,8 @@ package entities;
 import org.eclipse.persistence.jpa.config.Cascade;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +18,17 @@ public class Auction {
     @Column(name="AuctionID")
     @NotNull
     private int auctionId;
+
     @Column (name="Name")
+    @NotBlank
     private String name;
     @Column (name ="Date")
+    @NotBlank
     private String date;
+    @NotBlank
     @Column (name="Time")
     private String time;
+    @NotBlank
     @Column (name="Location")
     private String location;
 
